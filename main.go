@@ -15,6 +15,7 @@ import (
 	"github.com/poetworrier/mastools/api"
 )
 
+// TODO: redo the CLI using cobra or whatevers
 var (
 	accessToken = flag.String("accessToken", "", "Mastodon instance OAuth2 access token")
 	debug       = flag.Bool("debug", false, "Enable debug logging")
