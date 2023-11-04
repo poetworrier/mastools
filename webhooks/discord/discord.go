@@ -1,6 +1,6 @@
 package discord
 
-type Webhook struct {
+type EmbedWebhook struct {
 	Username  string   `json:"username"`
 	AvatarURL string   `json:"avatar_url"`
 	Content   string   `json:"content"`

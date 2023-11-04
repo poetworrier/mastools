@@ -12,6 +12,7 @@ var getTrendingTags = &cobra.Command{
 	Use:   "get-trending-tags",
 	Short: "Lists trending tags",
 	Run: func(cmd *cobra.Command, args []string) {
+		loadAccessToken()
 		c, closer := api.NewClient(origin, accessToken, debug)
 		defer closer()
 

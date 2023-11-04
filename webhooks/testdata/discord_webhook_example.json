@@ -1,0 +1,46 @@
+{
+    "username": "example",
+    "avatar_url": "https://cdn.example.org/avatars/example/original/728a30053bdc5213.jpg",
+    "content": "[view post](https://example.org/users/example/statuses/12345)",
+    "embeds": [
+        {
+            "author": {
+                "name": "Example",
+                "url": "https://example.org/@example",
+                "icon_url": "https://cdn.example.org/avatars/example/original/728a30053bdc5213.jpg"
+            },
+            "timestamp": "2023-11-04T03:36:45.474Z",
+            "title": "",
+            "url": "",
+            "description": "",
+            "color": 0,
+            "fields": [
+                {
+                    "name": "replies",
+                    "value": "10",
+                    "inline": true
+                },
+                {
+                    "name": "reblogs",
+                    "value": "10",
+                    "inline": true
+                },
+                {
+                    "name": "favourites",
+                    "value": "10",
+                    "inline": true
+                }
+            ],
+            "thumbnail": {
+                "url": ""
+            },
+            "image": {
+                "url": ""
+            },
+            "footer": {
+                "text": "",
+                "icon_url": ""
+            }
+        }
+    ]
+}

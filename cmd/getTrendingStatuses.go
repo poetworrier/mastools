@@ -13,6 +13,7 @@ var getTrendingStatuses = &cobra.Command{
 	Use:   "get-trending-status",
 	Short: "List trending statuses to review",
 	Run: func(cmd *cobra.Command, args []string) {
+		loadAccessToken()
 		c, closer := api.NewClient(origin, accessToken, debug)
 		defer closer()
 

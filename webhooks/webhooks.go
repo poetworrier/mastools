@@ -11,7 +11,7 @@ import (
 )
 
 type Convertable interface {
-	discord.Webhook | mastodon.MastodonStatus
+	discord.EmbedWebhook | mastodon.StatusWebhook
 }
 
 type Converter[Src Convertable, Dst Convertable] interface {
@@ -20,11 +20,12 @@ type Converter[Src Convertable, Dst Convertable] interface {
 }
 
 // Converts mastodon status webhooks into discord embed webhooks
+// TODO: if it's stateless, could it use value receivers?
 type StatusConverter struct{}
 
-// TODO: if it single stateless method, could these be value receivers?
-func (c *StatusConverter) Forward(m *mastodon.MastodonStatus) (*discord.Webhook, error) {
-	if m.Object == nil {
+// It is an error to pass a status webhook with a nil Object field.
+func (c *StatusConverter) Forward(m *mastodon.StatusWebhook) (*discord.EmbedWebhook, error) {
+	if m == nil || m.Object == nil {
 		return nil, errors.New("cannot convert nil")
 	}
 	var fields []discord.Field
@@ -39,7 +40,7 @@ func (c *StatusConverter) Forward(m *mastodon.MastodonStatus) (*discord.Webhook,
 			Inline: true,
 		})
 	}
-	return &discord.Webhook{
+	return &discord.EmbedWebhook{
 		Username:  m.Object.Account.Username,
 		AvatarURL: m.Object.Account.Avatar,
 		Content:   fmt.Sprintf("[view post](%s)", m.Object.URI),
@@ -57,6 +58,6 @@ func (c *StatusConverter) Forward(m *mastodon.MastodonStatus) (*discord.Webhook,
 	}, nil
 }
 
-func (c *StatusConverter) Backward(d *discord.Webhook) (*mastodon.MastodonStatus, error) {
+func (c *StatusConverter) Backward(d *discord.EmbedWebhook) (*mastodon.StatusWebhook, error) {
 	return nil, errors.ErrUnsupported
 }
