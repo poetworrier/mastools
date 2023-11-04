@@ -42,8 +42,13 @@ func init() {
 
 func loadAccessToken() {
 	if accessToken == "" {
+		// yikes, gotta be a better way to load from flag or viper
 		if secretName == "" {
-			log.Fatal(errors.New("no accessToken or secretName provided "))
+			secretName = viper.GetString("secretName")
+			if secretName == "" {
+				log.Fatal(errors.New("no accessToken or secretName provided "))
+
+			}
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
 		defer cancel()

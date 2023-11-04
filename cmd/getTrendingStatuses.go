@@ -10,7 +10,7 @@ import (
 
 // getTrendingStatuses represents the listStatuses command
 var getTrendingStatuses = &cobra.Command{
-	Use:   "get-trending-status",
+	Use:   "get-trending-statuses",
 	Short: "List trending statuses to review",
 	Run: func(cmd *cobra.Command, args []string) {
 		loadAccessToken()
