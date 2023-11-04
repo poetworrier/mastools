@@ -38,22 +38,28 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&origin, "origin", "https://pebble.social", "Mastodon instance origin URL")
 	rootCmd.PersistentFlags().StringVar(&secretName, "secretName", "", "GCP Secret name")
 	rootCmd.PersistentFlags().BoolVar(&debug, "debug", false, "Enable debug logging")
+}
 
-	cobra.OnInitialize(func() {
-		if accessToken == "" {
+func loadAccessToken() {
+	if accessToken == "" {
+		// yikes, gotta be a better way to load from flag or viper
+		if secretName == "" {
+			secretName = viper.GetString("secretName")
 			if secretName == "" {
 				log.Fatal(errors.New("no accessToken or secretName provided "))
-			}
-			ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
-			defer cancel()
 
-			var err error
-			accessToken, err = accessSecretVersion(ctx, secretName)
-			if err != nil {
-				log.Fatal(err)
 			}
 		}
-	})
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+		defer cancel()
+
+		var err error
+		accessToken, err = accessSecretVersion(ctx, secretName)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
 }
 
 // initConfig reads in config file and ENV variables if set.
