@@ -1,9 +1,11 @@
 package api_test
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"reflect"
 	"testing"
 
 	"github.com/poetworrier/mastools/api"
@@ -11,17 +13,20 @@ import (
 
 func TestListStatuses(t *testing.T) {
 	type args struct {
-		name string
-		s    string
+		name    string
+		want    string
+		wantErr bool
 	}
 	tests := []args{
 		{
 			"no statuses",
 			"[]",
+			false,
 		},
 		{
 			"empty",
 			"",
+			true,
 		},
 	}
 	for _, tt := range tests {
@@ -32,19 +37,27 @@ func TestListStatuses(t *testing.T) {
 					w.WriteHeader(400)
 					return
 				}
-				io.WriteString(w, "[]")
+				io.WriteString(w, tt.want)
 			}))
 			defer ts.Close()
 			c, cls := api.NewClient(ts.URL, "", false)
 			defer cls()
 
 			tr := api.NewTrends(c)
-			status, err := tr.ListStatus()
-			if err != nil {
+			got, err := tr.ListStatus()
+			if err != nil && !tt.wantErr {
 				t.Fatal(err)
 			}
-			if len(status) != 0 {
-				t.Errorf("non-empty status: len=%d", len(status))
+			if !tt.wantErr {
+				var s []api.Status
+				err := json.Unmarshal([]byte(tt.want), &s)
+				if err != nil {
+					t.Error(err)
+					return
+				}
+				if !reflect.DeepEqual(s, got) {
+					t.Errorf("want=%v, got=%v", s, got)
+				}
 			}
 		})
 	}
