@@ -21,7 +21,7 @@ var getTrendingTags = &cobra.Command{
 			log.Fatal(err)
 		}
 		for i := range s {
-			slog.Info("got statuses", "status", s[i])
+			slog.Info("tag", s[i].Name, s[i])
 		}
 	},
 }
