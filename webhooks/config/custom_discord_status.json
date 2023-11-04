@@ -1,15 +1,22 @@
 {
     "username": "{{object.account.username}}",
     "avatar_url": "{{object.account.avatar}}",
-    "content": "{{object.content}} [view]({{object.url}})",
-    "url": "http://pebble.social",
+    "content": "[view]({{object.uri}})",
     "embeds": [
         {
             "author": {
                 "name": "{{object.account.display_name}}",
                 "url": "{{object.account.url}}",
                 "icon_url": "{{object.account.avatar}}"
-            }
+            },
+            "timestamp": "{{object.created_at}}",
+            "fields": [
+                {
+                    "name": "replies",
+                    "value": "{{object.replies_count}}",
+                    "inline": true
+                }
+            ]
         }
     ]
 }

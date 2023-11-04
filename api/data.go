@@ -91,7 +91,7 @@ type Account struct {
 	CreatedAt string `json:"created_at"` // The date when the account was created
 	// Note           string    `json:"note"`             // HTML-encoded account biography
 	URL string `json:"url"` // The location of the account's profile
-	// Avatar         string    `json:"avatar"`           // The URL of the account's avatar
+	Avatar         string    `json:"avatar"`           // The URL of the account's avatar
 	// AvatarStatic   string    `json:"avatar_static"`    // The static URL of the account's avatar
 	// Header         string    `json:"header"`           // The URL of the account's header image
 	// HeaderStatic   string    `json:"header_static"`    // The static URL of the account's header image
