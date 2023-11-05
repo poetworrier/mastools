@@ -11,11 +11,16 @@ import (
 	"cloud.google.com/go/secretmanager/apiv1/secretmanagerpb"
 )
 
-// accessSecretVersion accesses the payload for the given secret version if one
+// WARNING: Do not print the secret in a production environment
+//
+// AccessSecretVersion accesses the payload for the given secret version if one
 // exists. The version can be a version number as a string (e.g. "5") or an
 // alias (e.g. "latest").
-// TODO: in a more generalized version this should might take a context
-// WARNING: Do not print the secret in a production environment
+//
+// Snippet based upon https://github.com/GoogleCloudPlatform/golang-samples/blob/968c611f22fca94d82ffcb3ab77b52d51bc4408f/secretmanager/access_secret_version.go#L17-L67
+// Copyright 2019 Google LLC - Apache V2
+//
+// This version is modified from the original to take a [context.Context] and return [(string, error)]
 func AccessSecretVersion(ctx context.Context, name string) (string, error) {
 	client, err := secretmanager.NewClient(ctx)
 	if err != nil {
@@ -23,11 +28,10 @@ func AccessSecretVersion(ctx context.Context, name string) (string, error) {
 	}
 	defer client.Close()
 
-	req := &secretmanagerpb.AccessSecretVersionRequest{
-		Name: name,
-	}
-
-	result, err := client.AccessSecretVersion(ctx, req)
+	result, err := client.AccessSecretVersion(ctx,
+		&secretmanagerpb.AccessSecretVersionRequest{
+			Name: name,
+		})
 	if err != nil {
 		return "", fmt.Errorf("failed to access secret version: %w", err)
 	}
