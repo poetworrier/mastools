@@ -30,27 +30,28 @@ func init() {
 func DiscordStatuses(w http.ResponseWriter, r *http.Request) {
 	var m mastodon.StatusWebhook
 	err := json.NewDecoder(r.Body).Decode(&m)
-	if err != nil && !writeErr(w, err) {
+	if err != nil {
+		writeErr(w, err)
 		return
 	}
 	var converter webhooks.StatusConverter
 	d, err := converter.Forward(&m)
-	if err != nil && !writeErr(w, err) {
+	if err != nil {
+		writeErr(w, err)
 		return
 	}
 	resp, err := client.R().SetBodyJsonMarshal(d).Post(statusesURL)
-	if err != nil && !writeErr(w, err) {
+	if err != nil {
+		writeErr(w, err)
 		return
 	}
 	w.WriteHeader(resp.StatusCode)
 }
 
-func writeErr(w http.ResponseWriter, err error) bool {
+func writeErr(w http.ResponseWriter, err error) {
 	w.WriteHeader(400)
 	_, err = fmt.Fprint(w, err)
 	if err != nil {
-		slog.Error("write failed", err)
-		return false
+		slog.Error("error write failed", err)
 	}
-	return true
 }

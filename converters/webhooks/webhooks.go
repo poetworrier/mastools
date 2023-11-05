@@ -10,8 +10,9 @@ import (
 	"github.com/poetworrier/mastools/api/mastodon"
 )
 
-// TODO: if it's stateless, could it use value receivers?
 // Converts mastodon status webhooks into discord embed webhooks
+//
+// TODO: if it's stateless, could it use value receivers?
 type StatusConverter struct{}
 
 // It is an error to pass a status webhook with a nil Object field.
@@ -49,6 +50,7 @@ func (c StatusConverter) Forward(m *mastodon.StatusWebhook) (*discord.EmbedWebho
 	}, nil
 }
 
+// Currently Backware is unsupported
 func (c StatusConverter) Backward(d *discord.EmbedWebhook) (*mastodon.StatusWebhook, error) {
 	return nil, errors.ErrUnsupported
 }
