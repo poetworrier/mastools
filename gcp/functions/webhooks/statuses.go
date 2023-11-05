@@ -33,7 +33,7 @@ func DiscordStatuses(w http.ResponseWriter, r *http.Request) {
 	if err != nil && !writeErr(w, err) {
 		return
 	}
-	converter := webhooks.StatusConverter{}
+	var converter webhooks.StatusConverter
 	d, err := converter.Forward(&m)
 	if err != nil && !writeErr(w, err) {
 		return

@@ -14,21 +14,21 @@ import (
 )
 
 func TestStatusConverter_Forward(t *testing.T) {
-	converter := webhooks.StatusConverter{}
+	var conv webhooks.StatusConverter
 
 	type args struct {
 		mastodon string
 	}
 	tests := []struct {
 		name    string
-		c       *webhooks.StatusConverter
+		conv    webhooks.StatusConverter
 		args    args
 		want    string
 		wantErr bool
 	}{
 		{
 			"test nil fails",
-			&converter,
+			conv,
 			args{
 				"",
 			},
@@ -37,7 +37,7 @@ func TestStatusConverter_Forward(t *testing.T) {
 		},
 		{
 			"test full example",
-			&converter,
+			conv,
 			args{
 				testdata.MastodonStatusExample,
 			},
@@ -63,7 +63,7 @@ func TestStatusConverter_Forward(t *testing.T) {
 					return
 				}
 			}
-			got, err := tt.c.Forward(m)
+			got, err := tt.conv.Forward(m)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("StatusConverter.Forward() error = %v, wantErr %v", err, tt.wantErr)
 				return

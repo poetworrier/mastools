@@ -10,21 +10,12 @@ import (
 	"github.com/poetworrier/mastools/api/mastodon"
 )
 
-type Convertable interface {
-	discord.EmbedWebhook | mastodon.StatusWebhook
-}
-
-type Converter[Src Convertable, Dst Convertable] interface {
-	Forward(s *Src) (*Dst, error)
-	Backward(d *Dst) (*Src, error)
-}
-
-// Converts mastodon status webhooks into discord embed webhooks
 // TODO: if it's stateless, could it use value receivers?
+// Converts mastodon status webhooks into discord embed webhooks
 type StatusConverter struct{}
 
 // It is an error to pass a status webhook with a nil Object field.
-func (c *StatusConverter) Forward(m *mastodon.StatusWebhook) (*discord.EmbedWebhook, error) {
+func (c StatusConverter) Forward(m *mastodon.StatusWebhook) (*discord.EmbedWebhook, error) {
 	if m == nil || m.Object == nil {
 		return nil, errors.New("cannot convert nil")
 	}
@@ -58,6 +49,6 @@ func (c *StatusConverter) Forward(m *mastodon.StatusWebhook) (*discord.EmbedWebh
 	}, nil
 }
 
-func (c *StatusConverter) Backward(d *discord.EmbedWebhook) (*mastodon.StatusWebhook, error) {
+func (c StatusConverter) Backward(d *discord.EmbedWebhook) (*mastodon.StatusWebhook, error) {
 	return nil, errors.ErrUnsupported
 }
