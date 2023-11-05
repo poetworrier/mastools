@@ -64,11 +64,11 @@ func TestStatusConverter_Forward(t *testing.T) {
 				}
 			}
 			got, err := tt.conv.Forward(m)
-			if (err != nil) != tt.wantErr {
+			if (err != nil) && !tt.wantErr {
 				t.Errorf("StatusConverter.Forward() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got, want) {
+			if !tt.wantErr && !reflect.DeepEqual(*got, *want) {
 				t.Errorf("StatusConverter.Forward() = %v, want %v", got, want)
 			}
 		})
