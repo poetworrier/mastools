@@ -2,6 +2,8 @@
 
 A bunch of tools
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/poetworrier/mastools.svg)](https://pkg.go.dev/github.com/poetworrier/mastools)
+
 ## Trends
 
 See <https://docs.joinmastodon.org/methods/admin/trends/>
