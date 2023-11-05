@@ -1,17 +1,19 @@
 // The api package contains http json bindings for Mastodon
-package api
+package mastodon_test
 
 import (
 	"log/slog"
 	"reflect"
 	"testing"
+
+	"github.com/poetworrier/mastools/api/mastodon"
 )
 
 func TestStatus_LogValue(t *testing.T) {
 	t.Skip()
 	tests := []struct {
 		name string
-		s    Status
+		s    mastodon.Status
 		want slog.Value
 	}{
 		// TODO: Add test cases.

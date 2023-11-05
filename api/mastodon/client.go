@@ -1,10 +1,10 @@
-package api
+package mastodon
 
 import (
 	"github.com/imroc/req/v3"
 )
 
-func NewClient(origin string, accessToken string, debug bool) (*req.Client, func()) {
+func NewMastodonClient(origin string, accessToken string, debug bool) (*req.Client, func()) {
 	// TODO: could do input validtion on params
 	c := req.C().
 		SetBaseURL(origin).

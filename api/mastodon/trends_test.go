@@ -1,4 +1,4 @@
-package api_test
+package mastodon_test
 
 import (
 	"encoding/json"
@@ -10,7 +10,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/poetworrier/mastools/api"
+	"github.com/poetworrier/mastools/api/mastodon"
 )
 
 func TestList(t *testing.T) {
@@ -62,10 +62,10 @@ func TestList(t *testing.T) {
 				io.WriteString(w, tt.want)
 			}))
 			defer ts.Close()
-			c, cls := api.NewClient(ts.URL, "", false)
+			c, cls := mastodon.NewMastodonClient(ts.URL, "", false)
 			defer cls()
 
-			tr := api.NewTrends(c)
+			tr := mastodon.NewTrends(c)
 			switch tt.kind {
 			case tag:
 				got, err := tr.ListTags()

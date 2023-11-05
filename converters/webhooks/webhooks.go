@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/poetworrier/mastools/webhooks/discord"
-	"github.com/poetworrier/mastools/webhooks/mastodon"
+	"github.com/poetworrier/mastools/api/discord"
+	"github.com/poetworrier/mastools/api/mastodon"
 )
 
 type Convertable interface {

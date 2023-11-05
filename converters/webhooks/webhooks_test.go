@@ -1,25 +1,27 @@
 // Webhooks provide json format converters that are useful for webhooks
-package webhooks
+package webhooks_test
 
 import (
 	"encoding/json"
+	"errors"
 	"reflect"
 	"testing"
 
-	"github.com/poetworrier/mastools/webhooks/discord"
-	"github.com/poetworrier/mastools/webhooks/mastodon"
-	"github.com/poetworrier/mastools/webhooks/testdata"
+	"github.com/poetworrier/mastools/api/discord"
+	"github.com/poetworrier/mastools/api/mastodon"
+	"github.com/poetworrier/mastools/converters/webhooks"
+	"github.com/poetworrier/mastools/converters/webhooks/testdata"
 )
 
 func TestStatusConverter_Forward(t *testing.T) {
-	converter := StatusConverter{}
+	converter := webhooks.StatusConverter{}
 
 	type args struct {
 		mastodon string
 	}
 	tests := []struct {
 		name    string
-		c       *StatusConverter
+		c       *webhooks.StatusConverter
 		args    args
 		want    string
 		wantErr bool
@@ -74,28 +76,10 @@ func TestStatusConverter_Forward(t *testing.T) {
 }
 
 func TestStatusConverter_Backward(t *testing.T) {
-	type args struct {
-		d *discord.EmbedWebhook
-	}
-	tests := []struct {
-		name    string
-		c       *StatusConverter
-		args    args
-		want    *mastodon.StatusWebhook
-		wantErr bool
-	}{
-		// TODO: Add test cases.
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got, err := tt.c.Backward(tt.args.d)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("StatusConverter.Backward() error = %v, wantErr %v", err, tt.wantErr)
-				return
-			}
-			if !reflect.DeepEqual(got, tt.want) {
-				t.Errorf("StatusConverter.Backward() = %v, want %v", got, tt.want)
-			}
-		})
+	var converter webhooks.StatusConverter
+	_, err := converter.Backward(nil)
+	if !errors.Is(err, errors.ErrUnsupported) {
+		t.Error("unexpected error returned", err)
+		return
 	}
 }
