@@ -4,7 +4,7 @@ import (
 	"log"
 	"log/slog"
 
-	"github.com/poetworrier/mastools/api"
+	"github.com/poetworrier/mastools/api/mastodon"
 	"github.com/spf13/cobra"
 )
 
@@ -13,10 +13,10 @@ var getTrendingTags = &cobra.Command{
 	Short: "Lists trending tags",
 	Run: func(cmd *cobra.Command, args []string) {
 		loadAccessToken()
-		c, closer := api.NewClient(origin, accessToken, debug)
+		c, closer := mastodon.NewMastodonClient(origin, accessToken, debug)
 		defer closer()
 
-		t := api.NewTrends(c)
+		t := mastodon.NewTrends(c)
 		s, err := t.ListTags()
 		if err != nil {
 			log.Fatal(err)

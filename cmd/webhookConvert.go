@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/poetworrier/mastools/webhooks"
-	"github.com/poetworrier/mastools/webhooks/mastodon"
+	"github.com/poetworrier/mastools/api/mastodon"
+	"github.com/poetworrier/mastools/converters/webhooks"
 	"github.com/spf13/cobra"
 )
 

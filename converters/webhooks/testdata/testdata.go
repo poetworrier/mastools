@@ -6,6 +6,7 @@ import _ "embed"
 var MastodonStatusExample string
 
 // TODO: enable to generate goldens
-// -- go:generate go run . webhook-convert  < webhooks/testdata/mastodon_status_example.json 
+// -- go:generate go run . webhook-convert  < webhooks/testdata/mastodon_status_example.json
+//
 //go:embed discord_webhook_example.json
 var DiscordWebhookExample string

@@ -1,4 +1,4 @@
-package api
+package mastodon
 
 // func TestNewClient(t *testing.T) {
 // 	t.Skip()

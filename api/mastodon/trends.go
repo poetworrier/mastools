@@ -1,4 +1,4 @@
-package api
+package mastodon
 
 import "github.com/imroc/req/v3"
 
